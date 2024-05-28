@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from app import db, EmptyTable
+from app import db, EmptyTable, Employee
 from main import MainWindow, run_main_window
 from PyQt5.QtCore import QThread
 import sys
@@ -42,6 +42,33 @@ def home():
 def test():
     # python dictionary to json
     return jsonify({"message": "endpoint"}), 200  # 200 = http status
+
+
+@api.route('/api/employees', methods=['GET'])
+def get_employees():
+    employees = Employee.query.all()
+    return jsonify([{
+        'id': employee.id,
+        'name': employee.name,
+        'position': employee.position,
+        'salary': employee.salary,
+        'email': employee.email
+    } for employee in employees]), 200
+
+# Endpoint to add a new employee
+
+@api.route('/api/employees', methods=['POST'])
+def add_employee():
+    data = request.get_json()
+    new_employee = Employee(
+        name=data['name'],
+        position=data['position'],
+        salary=data['salary'],
+        email=data['email']
+    )
+    db.session.add(new_employee)
+    db.session.commit()
+    return jsonify({'message': 'Employee added successfully!'}), 201
 
 
 # local, easy reloading
