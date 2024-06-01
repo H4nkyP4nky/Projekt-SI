@@ -13,7 +13,6 @@ from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
 
-
 # SQLAlchemy setup
 engine = create_engine("sqlite:///users.db")  # Create SQLite database
 Base = declarative_base()
@@ -99,8 +98,8 @@ class SignUpApp(QWidget):
 
     def authenticate(self):
         if (
-            self.username_input.text() == "admin"
-            and self.password_input.text() == "admin"
+                self.username_input.text() == "admin"
+                and self.password_input.text() == "admin"
         ):
             self.signup_form.show()
         else:
@@ -131,11 +130,11 @@ class SignUpApp(QWidget):
 if __name__ == "__main__":
     app = QApplication([])
     style = """
-    
+
     QWidget{
         background-color: #FFFFFF;
     }
-    
+
     QRadioButton{
         font-size: 18px;
     }
@@ -143,14 +142,14 @@ if __name__ == "__main__":
         font-size: 20px;
         margin-bottom: 0px;
     }
-    
+
     QLineEdit{
         height: 50px;
         font-size: 20px;
         border: 1px solid #326273;
         background-color: #EEEEEE;
     }
-    
+
     QPushButton{
     font-weight: bold;
         margin-top: 50px;
@@ -161,11 +160,11 @@ if __name__ == "__main__":
         color: #EEEEEE;
         background-color: #326273;
     }
-    
+
     QPushButton:pressed {
         background-color: #E39774;
     }
-    
+
     """
     app.setStyleSheet(style)
     ex = SignUpApp()
