@@ -11,11 +11,12 @@ from PyQt5.QtWidgets import (
     QLineEdit,
 )
 from PyQt5.QtGui import QPixmap, QFont
-
+from display_employees import DisplayEmployees  # Wyswietlanie pracownikow
 
 class DodajPracownika(QWidget):
     def __init__(self):
         super().__init__()
+        self.display_window = None  # Initialize display_window as None
         self.initUI()
 
     def initUI(self):
@@ -46,10 +47,30 @@ class DodajPracownika(QWidget):
             """
         )
 
+        self.btn_wyswietl_pracownikow = QPushButton('Wyświetl pracowników') # przycisk wyświetlania pracownikow
+        self.btn_wyswietl_pracownikow.clicked.connect(self.wyswietlPracownikow)
+        self.btn_wyswietl_pracownikow.setStyleSheet(
+            """
+            QPushButton {
+                background-color: #336274; /* ciemnoniebieskie tło */
+                color: white; /* biały tekst */
+                border: 2px solid #001F3F; /* ciemnoniebieska ramka */
+                border-radius: 10px; /* zaokrąglone rogi */
+                padding: 10px 20px; /* większy padding */
+                font-size: 16px; /* większa czcionka */
+                font-weight: bold; /* pogrubiona czcionka */
+                box-shadow: 3px 3px 5px grey; /* cień dookoła */
+                min-width: 150px; /* minimalna szerokość */
+                max-width: 450px;
+            }
+            """
+        )
+
         # Układ interfejsu użytkownika
         layout = QVBoxLayout()
         layout.addWidget(logo_label)
         layout.addWidget(self.btn_dodaj_pracownika)
+        layout.addWidget(self.btn_wyswietl_pracownikow)
         layout.setAlignment(QtCore.Qt.AlignCenter)  # Wyśrodkowanie przycisku
         self.setLayout(layout)
         self.setWindowTitle('Dodawanie Pracowników')
@@ -162,6 +183,11 @@ class DodajPracownika(QWidget):
         conn.close()  # Zamknięcie połączenia
 
         print("Pracownik dodany do bazy danych.")
+
+
+    def wyswietlPracownikow(self):
+        self.display_window = DisplayEmployees()  # Create a new instance each time
+        self.display_window.show()  # Show the new window
 
 
 if __name__ == '__main__':
